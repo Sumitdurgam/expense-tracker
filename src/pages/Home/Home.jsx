@@ -21,18 +21,14 @@ const useLocalStorage = (key, initialValue) => {
   return [storedValue, setStoredValue];
 };
 
-const calculateCategoryStats = (expenseList) => {
-  return expenseList.reduce(
-    (acc, item) => {
-      acc.spends[item.category] =
-        (acc.spends[item.category] || 0) + Number(item.price);
-      acc.counts[item.category] = (acc.counts[item.category] || 0) + 1;
+const calculateCategoryStats = (expenses) => {
+  return expenses.reduce(
+    (acc, { category, price }) => {
+      acc.spends[category] = (acc.spends[category] || 0) + Number(price);
+      acc.counts[category] = (acc.counts[category] || 0) + 1;
       return acc;
     },
-    {
-      spends: { food: 0, entertainment: 0, travel: 0 },
-      counts: { food: 0, entertainment: 0, travel: 0 },
-    }
+    { spends: { food: 0, entertainment: 0, travel: 0 }, counts: {} }
   );
 };
 
